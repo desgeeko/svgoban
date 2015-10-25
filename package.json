@@ -1,0 +1,24 @@
+{
+  "name": "svgoban",
+  "version": "0.1.0",
+  "description": "A lightweight JavaScript library that builds a Goban representation as a set of SVG shapes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desgeeko/svgoban.git"
+  },
+  "keywords": [
+    "svg",
+    "goban",
+    "go"
+  ],
+  "author": "desgeeko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/desgeeko/svgoban/issues"
+  },
+  "homepage": "https://github.com/desgeeko/svgoban"
+}
