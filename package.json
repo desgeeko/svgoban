@@ -1,7 +1,7 @@
 {
   "name": "svgoban",
-  "version": "0.1.0",
-  "description": "A lightweight JavaScript library that builds a Goban representation as a set of SVG shapes",
+  "version": "0.2.0",
+  "description": "A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
