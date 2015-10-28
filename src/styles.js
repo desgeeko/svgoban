@@ -65,7 +65,7 @@ exports.Themes = {
 	    stroke: black; 
 	}
 	text { 
-	    font-family: sans-serif; 
+	    font-family: "Ubuntu Light", sans-serif; 
 	    font-size: 1.1em; 
 	}
 	`;
