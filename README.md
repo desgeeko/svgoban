@@ -1,6 +1,7 @@
 SVGoban
 =======
-SVGoban is a lightweight JavaScript library that builds a Goban representation as a set of SVG shapes.
+
+*A lightweight JavaScript library that builds a Goban representation as a set of SVG shapes.*
 
 ## Project Guidelines
 
@@ -8,7 +9,7 @@ SVGoban is a lightweight JavaScript library that builds a Goban representation a
 * Scalable to any size without quality loss (SVG!)
 * No dependencies
 * Any goban size
-* Embedded or external CSS styling
+* CSS styling
 * Default themes with plain colors and very light gradients
 
 ## Demo
