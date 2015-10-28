@@ -1,7 +1,7 @@
 SVGoban
 =======
 
-*A lightweight JavaScript library that builds a Goban representation as a set of SVG shapes.*
+*A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes.*
 
 ## Project Guidelines
 
@@ -15,10 +15,26 @@ SVGoban
 ## Demo
 ![SVGoban demo](demo/demo.png)
 
-Generate a SVG sample output from this repository: `node demo/test_19classic_4stones.js > sample.svg`
+Generate a SVG sample output from this repository:
+`node demo/test_19classic_4stones.js > sample.svg`
 
-## Usage
-
-### Installation
+## Installation
 SVGoban may be installed as a NPM package: `npm install svgoban --save`
+
+## API
+"Pseudo-" elements are regular objects with a type attribute matching the target SVG element and other related attributes.
+
+### Geometry
+* `shapeGrid(size)` returns an array of 2*size pseudo-lines
+* `shapeStarPoints(size)` returns an array of pseudo-circles
+* `shapeLabels(size)` returns an array of 4*size pseudo-text
+* `shapeStones(size, position)` returns an array of size*size pseudo-circles (stones and placeholders)
+* `shapeArea()` returns the view box
+
+### Styles
+* `defineRadialColors(color)` returns gradient colors
+* `Themes` is an array of predefined themes: `"classic"` and `"paper"`
+
+### Helper
+* `serialize(config, position)` returns a string containing a full SVG goban
 
