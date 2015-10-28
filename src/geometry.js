@@ -21,7 +21,8 @@ exports.shapeGrid = function(size) {
 
     var s = {
 	"stroke-width":1, 
-	"shape-rendering":"geometricPrecision"
+	"shape-rendering":"crispEdges",
+	"vector-effect":"non-scaling-stroke"
     };
 
     /** @todo Replace multiple lines with one SVG path? */
