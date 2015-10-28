@@ -14,6 +14,7 @@ SVGoban
 
 ## Demo
 ![SVGoban demo](demo/demo.png)
+
 Generate a SVG sample output from this repository: `node demo/test_19classic_4stones.js > sample.svg`
 
 ## Usage
