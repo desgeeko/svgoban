@@ -24,6 +24,12 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 ## API
 "Pseudo-" elements are regular objects with a type attribute matching the target SVG element and other related attributes.
 
+### Attributes
+* `size` = a number between `9` and `19`
+* `color` = `"black"` or `"white"`
+* `position` = an object containing coordinates and colors as keys and values 
+* `config` = an object containing `size` and `theme` attributes
+
 ### Geometry
 * `shapeGrid(size)` returns an array of 2*size pseudo-lines
 * `shapeStarPoints(size)` returns an array of pseudo-circles
