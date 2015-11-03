@@ -32,8 +32,8 @@ var _toElem = function(shapes) {
         delete shapes[i].style;
 
 	for (var k in shapes[i]) {
+	    if (k == "key") continue;
 	    ret += k + '="' + shapes[i][k] + '" ';
-	    if (k == "coord") ret += 'id="' + '_' + shapes[i][k] + '" ';
 	}
 	ret += '>' 
 	ret += txt;

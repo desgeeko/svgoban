@@ -186,11 +186,12 @@ exports.shapeStones = function(size, positions) {
 
 	    cls = "stone";
 	    cls += positions[coord] ? " " + positions[coord] + "stone": " placeholder";
+	    cls += " " + coord;
 
 	    cx = SV_MARGIN + i * step;
 	    cy = SV_MARGIN - j * step + SV_GRID_SIZE;
 	    r = step / 2.1;
-	    ret.push({type:"circle", coord:coord, cx:cx, cy:cy, r:r, class:cls });
+	    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
 	}
     }
     return ret;
