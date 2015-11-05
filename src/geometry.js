@@ -111,11 +111,11 @@ exports.shapeLabels = function(size) {
     var ret = [];
     var hletter;
     var vnumber;
-    var skipJ;
+    var skipI;
     
     for ( var i = 1; i <= size; i++ ) {
-	skipJ = i >= 9 ? 1 : 0;
-	hletter = String.fromCharCode(64 + i + skipJ);
+	skipI = i >= 9 ? 1 : 0;
+	hletter = String.fromCharCode(64 + i + skipI);
 
 	/** Top row */
 	x = SV_MARGIN + i * step;
@@ -173,14 +173,11 @@ exports.shapeStones = function(size, positions) {
     var step = SV_GRID_SIZE / (size + 1);
     var cx, cy, r, cls;
     var ret = [];
-    var hletter;
-    var vnumber;
-    var coord;
-    var skipJ;
+    var hletter, vnumber, coord, skipI;
 
     for ( var i = 1; i <= size; i++ ) {
-	skipJ = i >= 9 ? 1 : 0;
-	hletter = String.fromCharCode(64 + i + skipJ);
+	skipI = i >= 9 ? 1 : 0;
+	hletter = String.fromCharCode(64 + i + skipI);
 	for ( var j = 1; j <= size; j++ ) {
 	    vnumber = j.toString();
 	    coord = hletter + vnumber; 
