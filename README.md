@@ -35,6 +35,7 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `shapeStarPoints(size)` returns an array of pseudo-circles
 * `shapeLabels(size)` returns an array of 4*size pseudo-text
 * `shapeStones(size, position)` returns an array of size*size pseudo-circles (stones and placeholders)
+* `shapeStone(size, intersection, color)` returns 1 pseudo-circle
 * `shapeArea()` returns the view box
 
 ### Styles

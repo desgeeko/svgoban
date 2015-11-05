@@ -165,6 +165,7 @@ exports.shapeLabels = function(size) {
  * Shapes the stones and placeholders.
  *
  * @param {number} size the grid base (9, 13, 19)
+ * @param {Object} positions as key-value pairs of coordinates and colors
  * @returns {Array} 
  */
 exports.shapeStones = function(size, positions) {
@@ -194,6 +195,37 @@ exports.shapeStones = function(size, positions) {
 	    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
 	}
     }
+    return ret;
+}
+
+/**
+ * Shapes a specific intersection.
+ *
+ * @param {number} size the grid base (9, 13, 19)
+ * @param {string} intersection
+ * @param {string} color ("black"/"white"/"placeholder")
+ * @returns {Array}
+ */
+exports.shapeStone = function(size, intersection, color) {
+    size = +size;
+    var step = SV_GRID_SIZE / (size + 1);
+    var cx, cy, r, cls;
+    var ret = [];
+    var i, j, skipI, coord;
+
+    coord = intersection;
+    i = intersection.charCodeAt(0) - 64;
+    skipI = i >= 9 ? 1 : 0;
+    i -= skipI;
+    j = +intersection.substring(1);
+    cls = "stone";
+    color = (color == "placeholder") ? color : color + cls;
+    cls += " " + color;
+    cls += " " + coord;
+    cx = SV_MARGIN + i * step;
+    cy = SV_MARGIN - j * step + SV_GRID_SIZE;
+    r = step / 2.1;
+    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
     return ret;
 }
 
