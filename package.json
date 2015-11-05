@@ -1,6 +1,6 @@
 {
   "name": "svgoban",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes",
   "main": "index.js",
   "scripts": {
@@ -11,9 +11,11 @@
     "url": "git+https://github.com/desgeeko/svgoban.git"
   },
   "keywords": [
+    "go",
+    "weiqi",
+    "baduk",
     "svg",
-    "goban",
-    "go"
+    "goban"
   ],
   "author": "desgeeko",
   "license": "MIT",

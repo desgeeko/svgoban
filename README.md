@@ -45,3 +45,10 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 ### Helper
 * `serialize(config, position)` returns a string containing a full SVG goban
 
+## Roadmap
+
+This is a Work In Progress.
+* Optimize various things
+* Zoom
+* Add markers (last stone played,...)
+
