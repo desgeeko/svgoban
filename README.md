@@ -29,14 +29,16 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `color` = `"black"` or `"white"`
 * `position` = an object containing coordinates and colors as keys and values 
 * `config` = an object containing `size` and `theme` attributes
+* `noMargin` and `hideMargin` = booleans
 
 ### Geometry
+* `shapeBackground(noMargin)` returns 1 pseudo-square whose area may include the margin
 * `shapeGrid(size)` returns an array of 2*size pseudo-lines
 * `shapeStarPoints(size)` returns an array of pseudo-circles
 * `shapeLabels(size)` returns an array of 4*size pseudo-text
 * `shapeStones(size, position)` returns an array of size*size pseudo-circles (stones and placeholders)
 * `shapeStone(size, intersection, color)` returns 1 pseudo-circle
-* `shapeArea()` returns the view box
+* `shapeArea(hideMargin)` returns a view box that may include the margin
 
 ### Styles
 * `defineRadialColors(color)` returns gradient colors

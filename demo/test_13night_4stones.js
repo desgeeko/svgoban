@@ -2,15 +2,19 @@
 var SVGoban = require('..');
 
 var config = {
-	"size":13,
-	"theme":"night"
+    "size":13,
+    "theme":"night",
+    "noMargin":true,
+    "hideMargin":false
 };
 
 var position = {
-	"J10":"black",	
-	"E10":"white",
-	"D4":"black",
-	"K4":"white"
+    "A1":"black",	
+    "N1":"white",	
+    "J10":"black",	
+    "E10":"white",
+    "D4":"black",
+    "K4":"white"
 };
 
 console.log(SVGoban.serialize(config, position));

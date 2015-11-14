@@ -6,6 +6,30 @@
 
 var SV_GRID_SIZE = 560;
 var SV_MARGIN = 30;
+var SV_BORDER_SHRINK = 7;
+
+
+/**
+ * Shapes the background.
+ *
+ * @param {boolean} noMargin
+ * @returns {Array} 
+ */
+exports.shapeBackground = function(noMargin) {
+    var offset, sz, cls;
+    var ret = [];
+
+    cls = "wood";
+    if (noMargin) {
+	offset = SV_MARGIN + SV_BORDER_SHRINK;
+	sz = SV_GRID_SIZE - 2*SV_BORDER_SHRINK;
+    } else {
+	offset = 0;
+	sz = SV_GRID_SIZE + 2*SV_MARGIN;
+    }
+    ret.push({type:"rect", class:cls, x:offset, y:offset, width:sz, height:sz});
+    return ret;
+}
 
 /**
  * Shapes the horizontal and vertical lines.
@@ -119,7 +143,7 @@ exports.shapeLabels = function(size) {
 
 	/** Top row */
 	x = SV_MARGIN + i * step;
-	y = SV_MARGIN;
+	y = SV_MARGIN - 5;
 	txt = hletter;
 	var s = {
 	    "text-anchor":"middle" 
@@ -128,7 +152,7 @@ exports.shapeLabels = function(size) {
 
 	/** Bottom row */
 	x = SV_MARGIN + i * step;
-	y = SV_MARGIN + SV_GRID_SIZE + 12;
+	y = SV_MARGIN + SV_GRID_SIZE + 15;
 	txt = hletter;
 	var s = {
 	    "text-anchor":"middle" 
@@ -229,13 +253,18 @@ exports.shapeStone = function(size, intersection, color) {
 /**
  * Shapes the visible area.
  *
- * @returns {Array} 
+ * @param {boolean} hideMargin
+ * @returns {Array} viewBox (visible area)
  */
-exports.shapeArea = function() {
-    /** @todo Zoom */
-    var sz = SV_GRID_SIZE + 2*SV_MARGIN - 1;
-    return [0, 0, sz, sz];
+exports.shapeArea = function(hideMargin) {
+    var offset, sz;
+    if (hideMargin) {
+	offset = SV_MARGIN + SV_BORDER_SHRINK;
+	sz = SV_GRID_SIZE - 2*SV_BORDER_SHRINK;
+    } else {
+	offset = 0;
+	sz = SV_GRID_SIZE + 2*SV_MARGIN;
+    }
+    return [offset, offset, sz, sz];
 }
-
-
 

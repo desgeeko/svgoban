@@ -42,9 +42,15 @@ var _toElem = function(shapes) {
     return ret;
 }
 
+var _addBackgroundLayer = function(str, noMargin) {
+    str += '<g class="background_layer">'
+    str +=   _toElem(Geo.shapeBackground(noMargin));
+    str += '</g>'
+    return str;
+}
+
 var _addGridLayer = function(str, size) {
     str += '<g class="grid_layer">'
-    str +=   '<rect class="wood" x="0" y="0" width="100%" height="100%" />';
     str +=   _toElem(Geo.shapeGrid(size));
     str += '</g>'
     return str;
@@ -103,7 +109,9 @@ var _addStyles = function(str, theme) {
 var serializeSVG = function(config, pos) {
     var size = config.size || 19;
     var theme = config.theme || "classic";
-    var viewBox = Geo.shapeArea().join(" ");
+    var noMargin = (typeof(config.noMargin) == "undefined") ? false : config.noMargin;
+    var hideMargin = (typeof(config.hideMargin) == "undefined") ? false : config.hideMargin;
+    var viewBox = Geo.shapeArea(hideMargin).join(" ");
     var str = '<svg class="svgoban" xmlns="http://www.w3.org/2000/svg" version="1.1" ';
     str += 'height="100%" viewBox="' + viewBox + '" >';    
     str += '<defs>';
@@ -111,10 +119,13 @@ var serializeSVG = function(config, pos) {
     str = _addGradient(str, "white");
     str = _addStyles(str, theme);
     str += '</defs>';
+    str += '<g class="layers">';
+    str = _addBackgroundLayer(str, noMargin);
     str = _addGridLayer(str, size);
     str = _addStarPointsLayer(str, size);
     str = _addStonesLayer(str, size, pos);
     str = _addLettersLayer(str, size);
+    str += '</g>';
     str += '</svg>';
     return str;
 }
