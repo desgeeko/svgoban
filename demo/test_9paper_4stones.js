@@ -15,5 +15,5 @@ var position = {
     "G3":"white"
 };
 
-console.log(SVGoban.serialize(config, position));
+console.log(SVGoban.serialize(config, position, "G3"));
 

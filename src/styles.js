@@ -61,6 +61,14 @@ exports.Themes = {
 	    .whitestone { 
 		fill: url(#whitegrad);
 	    }
+	    .black.lastmove {
+		stroke: white;
+		fill: none;
+	    }
+	    .white.lastmove {
+		stroke: black;
+		fill: none;
+	    }
 	line { 
 	    stroke: black; 
 	}
@@ -95,6 +103,14 @@ exports.Themes = {
 	    }
 	    .whitestone { 
 		fill: #888888;
+	    }
+	    .black.lastmove {
+		stroke: white;
+		fill: none;
+	    }
+	    .white.lastmove {
+		stroke: black;
+		fill: none;
 	    }
 	line { 
 	    stroke: black; 
@@ -132,6 +148,14 @@ exports.Themes = {
 	    .whitestone { 
 		fill: white;
 		stroke: black;
+	    }
+	    .black.lastmove {
+		stroke: white;
+		fill: none;
+	    }
+	    .white.lastmove {
+		stroke: black;
+		fill: none;
 	    }
 	line { 
 	    stroke: black; 
