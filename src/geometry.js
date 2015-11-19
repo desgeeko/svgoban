@@ -274,8 +274,7 @@ exports.shapeMarkers = function(size, markers, positions) {
 	y = SV_MARGIN - j * step + SV_GRID_SIZE;
 
 	if ("cross" == markers[k]) {
-	    cls = "cross on";
-	    cls += (positions[k] || "white");
+	    cls = markers[k] + " on" + (positions[k] || "white");
 	    x1 = x - step / SV_MARKER;
 	    y1 = y;
 	    x2 = x + step / SV_MARKER;
@@ -289,14 +288,12 @@ exports.shapeMarkers = function(size, markers, positions) {
 	    ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, class:cls, transform:rot});
 
 	} else if ("circle" == markers[k]) {
-	    cls = "circle on";
-	    cls += (positions[k] || "white");
+	    cls = markers[k] + " on" + (positions[k] || "white");
 	    r = step / 3.5;
 	    ret.push({type:"circle", cx:x, cy:y, r:r, class:cls });
 
 	} else if ("square" == markers[k]) {
-	    cls = "square on";
-	    cls += (positions[k] || "white");
+	    cls = markers[k] + " on" + (positions[k] || "white");
 	    var delta = step / SV_MARKER * Math.cos(Math.PI / 4);
 	    var side = 2 * delta;
 	    x1 = x - delta;
@@ -304,8 +301,7 @@ exports.shapeMarkers = function(size, markers, positions) {
 	    ret.push({type:"rect", x:x1, y:y1, width:side, height:side, class:cls});
 
 	} else if ("triangle" == markers[k]) {
-	    cls = "triangle on";
-	    cls += (positions[k] || "white");
+	    cls = markers[k] + " on" + (positions[k] || "white");
 	    x1 = x;
 	    y1 = y - step / SV_MARKER;
 	    x2 = x + step / SV_MARKER * Math.cos(Math.PI / 2 + 2 * Math.PI / 3);
@@ -314,6 +310,17 @@ exports.shapeMarkers = function(size, markers, positions) {
 	    y3 = y - step / SV_MARKER * Math.sin(Math.PI / 2 + 4 * Math.PI / 3);
 	    points = x1 + "," + y1 + " " + x2 + "," + y2 + " " + x3 + "," + y3;
 	    ret.push({type:"polygon", points:points, class:cls});
+	} else {
+	    cls = "wood";
+	    r = step / 3;
+	    ret.push({type:"circle", cx:x, cy:y, r:r, class:cls });
+	    cls = "on" + (positions[k] || "white");
+	    var txt = markers[k];
+	    var s = {
+		"text-anchor":"middle", 
+		"dominant-baseline":"central"
+	    };
+	    ret.push({type:"text", x:x, y:y, txt:txt, style:s});
 	}
     }
     return ret;

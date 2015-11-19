@@ -20,6 +20,13 @@ var position = {
 var markers = {
     "A1":"circle",
     "T1":"circle",
+    "G8":"a",
+    "H8":"b",
+    "J8":"C",
+    "K8":"D",
+    "L8":"1",
+    "M8":"2",
+    "N8":"3",
     "E16":"square",
     "K12":"cross",
     "J12":"triangle",
