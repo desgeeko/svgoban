@@ -38,7 +38,7 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `shapeLabels(size)` returns an array of 4*size pseudo-text
 * `shapeStones(size, positions)` returns an array of size*size pseudo-circles (stones and placeholders)
 * `shapeStone(size, intersection, color)` returns 1 pseudo-circle
-* `shapeLastPlayed(size, intersection, positions)` returns 1 pseudo-circle to mark last move
+* `shapeMarkers(size, markers, positions)` returns an array of pseudo-elements drawing triangles, squares,...
 * `shapeArea(hideMargin)` returns a view box that may include the margin
 
 ### Styles
@@ -46,12 +46,12 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `Themes` is an array of predefined themes: `"classic"` and `"paper"`
 
 ### Helper
-* `serialize(config, position, lastmove)` returns a string containing a full SVG goban
+* `serialize(config, position, markers)` returns a string containing a full SVG goban
 
 ## Roadmap
 
 This is a Work In Progress.
 * Optimize various things
 * Zoom
-* Add markers (last stone played,...)
+* Add new types of markers
 

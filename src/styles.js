@@ -61,11 +61,11 @@ exports.Themes = {
 	    .whitestone { 
 		fill: url(#whitegrad);
 	    }
-	    .black.lastmove {
+	    .onblack {
 		stroke: white;
 		fill: none;
 	    }
-	    .white.lastmove {
+	    .onwhite {
 		stroke: black;
 		fill: none;
 	    }
@@ -104,11 +104,11 @@ exports.Themes = {
 	    .whitestone { 
 		fill: #888888;
 	    }
-	    .black.lastmove {
+	    .black.circle {
 		stroke: white;
 		fill: none;
 	    }
-	    .white.lastmove {
+	    .white.circle {
 		stroke: black;
 		fill: none;
 	    }
@@ -149,11 +149,11 @@ exports.Themes = {
 		fill: white;
 		stroke: black;
 	    }
-	    .black.lastmove {
+	    .black.circle {
 		stroke: white;
 		fill: none;
 	    }
-	    .white.lastmove {
+	    .white.circle {
 		stroke: black;
 		fill: none;
 	    }

@@ -7,7 +7,7 @@
 var SV_GRID_SIZE = 560;
 var SV_MARGIN = 30;
 var SV_BORDER_SHRINK = 7;
-
+var SV_MARKER = 2.5;
 
 /**
  * Shapes the background.
@@ -254,27 +254,68 @@ exports.shapeStone = function(size, intersection, color) {
  * Shapes the last stone played marker.
  *
  * @param {number} size the grid base (9, 13, 19)
- * @param {string} intersection
+ * @param {Object} markers
  * @param {Object} positions as key-value pairs of coordinates and colors
  * @returns {Array}
  */
-exports.shapeLastPlayed = function(size, intersection, positions) {
+exports.shapeMarkers = function(size, markers, positions) {
     size = +size;
     var step = SV_GRID_SIZE / (size + 1);
-    var cx, cy, r, cls;
+    var x, y, x1, y1, x2, y2, cls, points;
     var ret = [];
     var i, j, skipI, coord;
 
-    i = intersection.charCodeAt(0) - 64;
-    skipI = i >= 9 ? 1 : 0;
-    i -= skipI;
-    j = +intersection.substring(1);
-    cls = "lastmove ";
-    cls += positions[intersection];
-    cx = SV_MARGIN + i * step;
-    cy = SV_MARGIN - j * step + SV_GRID_SIZE;
-    r = step / 3.5;
-    ret.push({type:"circle", cx:cx, cy:cy, r:r, class:cls });
+    for (var k in markers) {
+	i = k.charCodeAt(0) - 64;
+	skipI = i >= 9 ? 1 : 0;
+	i -= skipI;
+	j = +k.substring(1);
+	x = SV_MARGIN + i * step;
+	y = SV_MARGIN - j * step + SV_GRID_SIZE;
+
+	if ("cross" == markers[k]) {
+	    cls = "cross on";
+	    cls += (positions[k] || "white");
+	    x1 = x - step / SV_MARKER;
+	    y1 = y;
+	    x2 = x + step / SV_MARKER;
+	    y2 = y;
+	    rot = "rotate(45," + x + "," + y + ")";
+	    ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, class:cls, transform:rot});
+	    y1 = y - step / SV_MARKER;
+	    x1 = x;
+	    y2 = y + step / SV_MARKER;
+	    x2 = x;
+	    ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, class:cls, transform:rot});
+
+	} else if ("circle" == markers[k]) {
+	    cls = "circle on";
+	    cls += (positions[k] || "white");
+	    r = step / 3.5;
+	    ret.push({type:"circle", cx:x, cy:y, r:r, class:cls });
+
+	} else if ("square" == markers[k]) {
+	    cls = "square on";
+	    cls += (positions[k] || "white");
+	    var delta = step / SV_MARKER * Math.cos(Math.PI / 4);
+	    var side = 2 * delta;
+	    x1 = x - delta;
+	    y1 = y - delta;
+	    ret.push({type:"rect", x:x1, y:y1, width:side, height:side, class:cls});
+
+	} else if ("triangle" == markers[k]) {
+	    cls = "triangle on";
+	    cls += (positions[k] || "white");
+	    x1 = x;
+	    y1 = y - step / SV_MARKER;
+	    x2 = x + step / SV_MARKER * Math.cos(Math.PI / 2 + 2 * Math.PI / 3);
+	    y2 = y - step / SV_MARKER * Math.sin(Math.PI / 2 + 2 * Math.PI / 3);
+	    x3 = x + step / SV_MARKER * Math.cos(Math.PI / 2 + 4 * Math.PI / 3);
+	    y3 = y - step / SV_MARKER * Math.sin(Math.PI / 2 + 4 * Math.PI / 3);
+	    points = x1 + "," + y1 + " " + x2 + "," + y2 + " " + x3 + "," + y3;
+	    ret.push({type:"polygon", points:points, class:cls});
+	}
+    }
     return ret;
 }
 

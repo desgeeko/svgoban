@@ -70,9 +70,9 @@ var _addStonesLayer = function(str, size, pos) {
     return str;
 }
 
-var _addMarkersLayer = function(str, size, lastmove, pos) {
+var _addMarkersLayer = function(str, size, markers, pos) {
     str += '<g class="markers_layer">'
-    str +=   _toElem(Geo.shapeLastPlayed(size, lastmove, pos));
+    str +=   _toElem(Geo.shapeMarkers(size, markers, pos));
     str += '</g>'
     return str;
 }
@@ -113,7 +113,7 @@ var _addStyles = function(str, theme) {
  * @param {object} pos object containing locations of stones
  * @returns {string} 
  */
-var serializeSVG = function(config, pos, lastmove) {
+var serializeSVG = function(config, pos, markers) {
     var size = config.size || 19;
     var theme = config.theme || "classic";
     var noMargin = (typeof(config.noMargin) == "undefined") ? false : config.noMargin;
@@ -132,7 +132,7 @@ var serializeSVG = function(config, pos, lastmove) {
     str = _addLettersLayer(str, size);
     str = _addStarPointsLayer(str, size);
     str = _addStonesLayer(str, size, pos);
-    str = _addMarkersLayer(str, size, lastmove, pos);
+    str = _addMarkersLayer(str, size, markers, pos);
     str += '</g>';
     str += '</svg>';
     return str;
