@@ -5,10 +5,12 @@
  */
 
 exports.shapeGrid = require('./src/geometry').shapeGrid;
+exports.shapeBackground = require('./src/geometry').shapeBackground;
 exports.shapeStarPoints = require('./src/geometry').shapeStarPoints;
 exports.shapeLabels = require('./src/geometry').shapeLabels;
 exports.shapeStones = require('./src/geometry').shapeStones;
 exports.shapeStone = require('./src/geometry').shapeStone;
+exports.shapeMarkers = require('./src/geometry').shapeMarkers;
 exports.shapeArea = require('./src/geometry').shapeArea;
 
 exports.defineRadialColors = require('./src/styles').defineRadialColors;
