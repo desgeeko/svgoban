@@ -104,11 +104,11 @@ exports.Themes = {
 	    .whitestone { 
 		fill: #888888;
 	    }
-	    .black.circle {
+	    .onblack {
 		stroke: white;
 		fill: none;
 	    }
-	    .white.circle {
+	    .onwhite {
 		stroke: black;
 		fill: none;
 	    }
@@ -149,11 +149,11 @@ exports.Themes = {
 		fill: white;
 		stroke: black;
 	    }
-	    .black.circle {
+	    .onblack {
 		stroke: white;
 		fill: none;
 	    }
-	    .white.circle {
+	    .onwhite {
 		stroke: black;
 		fill: none;
 	    }

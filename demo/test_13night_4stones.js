@@ -17,5 +17,9 @@ var position = {
     "K4":"white"
 };
 
-console.log(SVGoban.serialize(config, position, "N1"));
+var markers = {
+    "K4":"circle"
+}
+
+console.log(SVGoban.serialize(config, position, markers));
 

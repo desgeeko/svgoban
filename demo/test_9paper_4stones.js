@@ -15,5 +15,9 @@ var position = {
     "G3":"white"
 };
 
-console.log(SVGoban.serialize(config, position, "G3"));
+var markers = {
+    "G3":"circle"
+}
+
+console.log(SVGoban.serialize(config, position, markers));
 
