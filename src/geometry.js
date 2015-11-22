@@ -49,21 +49,25 @@ exports.shapeGrid = function(size) {
 	"vector-effect":"non-scaling-stroke"
     };
 
-    /** @todo Replace multiple lines with one SVG path? */
+    var d = "";
     for (var i = 1; i <= size; i++) {
 	x1 = SV_MARGIN + step;
 	y1 = SV_MARGIN + i * step;
 	x2 = SV_MARGIN + SV_GRID_SIZE - step;
 	y2 = SV_MARGIN + i * step;
-	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
+	d += "M" + x1 + " " + y1 + "H " + x2 + " ";
+//	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
     }
     for (var j = 1; j <= size; j++) {
 	x1 = SV_MARGIN + j * step;
 	y1 = SV_MARGIN + step;
 	x2 = SV_MARGIN + j * step;
 	y2 = SV_MARGIN + SV_GRID_SIZE - step;
-	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
+	d += "M" + x1 + " " + y1 + "V " + y2 + " ";
+//	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
     } 
+    /** Replace multiple lines with one SVG path */
+    ret.push({type:"path", d:d, style:s});
     return ret;
 }
 

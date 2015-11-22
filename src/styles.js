@@ -69,7 +69,7 @@ exports.Themes = {
 		stroke: black;
 		fill: none;
 	    }
-	line { 
+	line, path {
 	    stroke: black; 
 	}
 	text { 
@@ -112,7 +112,7 @@ exports.Themes = {
 		stroke: black;
 		fill: none;
 	    }
-	line { 
+	line, path {
 	    stroke: black; 
 	}
 	text { 
@@ -157,7 +157,7 @@ exports.Themes = {
 		stroke: black;
 		fill: none;
 	    }
-	line { 
+	line, path {
 	    stroke: black; 
 	}
 	text { 
