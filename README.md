@@ -30,12 +30,13 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `position` = an object containing coordinates and colors as keys and values 
 * `config` = an object containing `size` and `theme` attributes
 * `noMargin` and `hideMargin` = booleans
+* `coordSystem` = `"A1"` or `"aa"`
 
 ### Geometry
 * `shapeBackground(noMargin)` returns 1 pseudo-square whose area may include the margin
 * `shapeGrid(size)` returns an array of 2*size pseudo-lines
 * `shapeStarPoints(size)` returns an array of pseudo-circles
-* `shapeLabels(size)` returns an array of 4*size pseudo-text
+* `shapeLabels(size, coordSystem)` returns an array of 4*size pseudo-text
 * `shapeStones(size, positions)` returns an array of size*size pseudo-circles (stones and placeholders)
 * `shapeStone(size, intersection, color)` returns 1 pseudo-circle
 * `shapeMarkers(size, markers, positions)` returns an array of pseudo-elements drawing triangles, squares,...

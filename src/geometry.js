@@ -126,29 +126,47 @@ exports.shapeStarPoints = function(size) {
     return ret;
 }
 
+var horizontal = function(i, coordSystem) {
+    if ("aa" === coordSystem) {
+	var CODE_a = 97;
+	return String.fromCharCode(CODE_a + --i);
+    }
+    else { // "A1" (default)
+	var CODE_A = 65;
+	var skipI = i >= 9 ? 1 : 0;
+	return String.fromCharCode(CODE_A + --i + skipI);
+    }
+}
+
+var vertical = function(j, coordSystem, size) {
+    if ("aa" === coordSystem) {
+	var CODE_a = 97;
+	return String.fromCharCode(CODE_a + --j);
+    }
+    else { // "A1" (default)
+	return (size - --j).toString();
+    }
+}
+
 /**
  * Shapes the axis labels.
  *
  * @param {number} size the grid base (9, 13, 19)
  * @returns {Array} 
  */
-exports.shapeLabels = function(size) {
+exports.shapeLabels = function(size, coordSystem) {
     size = +size;
+    coordSystem = coordSystem || "A1";
     var step = SV_GRID_SIZE / (size + 1);
     var x, y, txt;
     var ret = [];
-    var hletter;
-    var vnumber;
-    var skipI;
     
     for ( var i = 1; i <= size; i++ ) {
-	skipI = i >= 9 ? 1 : 0;
-	hletter = String.fromCharCode(64 + i + skipI);
 
 	/** Top row */
 	x = SV_MARGIN + i * step;
 	y = SV_MARGIN - 5;
-	txt = hletter;
+	txt = horizontal(i, coordSystem);
 	var s = {
 	    "text-anchor":"middle" 
 	};
@@ -157,19 +175,19 @@ exports.shapeLabels = function(size) {
 	/** Bottom row */
 	x = SV_MARGIN + i * step;
 	y = SV_MARGIN + SV_GRID_SIZE + 15;
-	txt = hletter;
+	txt = horizontal(i, coordSystem);
 	var s = {
 	    "text-anchor":"middle" 
 	};
 	ret.push({type:"text", x:x, y:y, txt:txt, style:s});
     }
     for ( var j = 1; j <= size; j++ ) {
-	vnumber = j.toString();
 
 	/** Left column */
 	x = SV_MARGIN;
-	y = SV_MARGIN - j * step + SV_GRID_SIZE;
-	txt = vnumber;
+//	y = SV_MARGIN - j * step + SV_GRID_SIZE;
+	y = SV_MARGIN + j * step;
+	txt = vertical(j, coordSystem, size);
 	var s = {
 	    "text-anchor":"end", 
 	    "dominant-baseline":"central"
@@ -178,8 +196,9 @@ exports.shapeLabels = function(size) {
 
 	/** Right column */
 	x = SV_MARGIN + SV_GRID_SIZE;
-	y = SV_MARGIN - j * step + SV_GRID_SIZE;
-	txt = vnumber;
+//	y = SV_MARGIN - j * step + SV_GRID_SIZE;
+	y = SV_MARGIN + j * step;
+	txt = vertical(j, coordSystem, size);
 	var s = {
 	    "text-anchor":"start", 
 	    "dominant-baseline":"central"

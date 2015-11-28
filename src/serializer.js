@@ -77,9 +77,9 @@ var _addMarkersLayer = function(str, size, markers, pos) {
     return str;
 }
 
-var _addLettersLayer = function(str, size) {
+var _addLettersLayer = function(str, size, coordSystem) {
     str += '<g class="letters_layer">'
-    str +=   _toElem(Geo.shapeLabels(size));
+    str +=   _toElem(Geo.shapeLabels(size, coordSystem));
     str += '</g>'
     return str;
 }
@@ -116,6 +116,7 @@ var _addStyles = function(str, theme) {
 var serializeSVG = function(config, pos, markers) {
     var size = config.size || 19;
     var theme = config.theme || "classic";
+    var coordSystem = config.coordSystem || "A1";
     var noMargin = (typeof(config.noMargin) == "undefined") ? false : config.noMargin;
     var hideMargin = (typeof(config.hideMargin) == "undefined") ? false : config.hideMargin;
     var viewBox = Geo.shapeArea(hideMargin).join(" ");
@@ -129,7 +130,7 @@ var serializeSVG = function(config, pos, markers) {
     str += '<g class="layers">';
     str = _addBackgroundLayer(str, noMargin);
     str = _addGridLayer(str, size);
-    str = _addLettersLayer(str, size);
+    str = _addLettersLayer(str, size, coordSystem);
     str = _addStarPointsLayer(str, size);
     str = _addStonesLayer(str, size, pos);
     str = _addMarkersLayer(str, size, markers, pos);

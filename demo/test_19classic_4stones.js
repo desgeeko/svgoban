@@ -4,6 +4,7 @@ var SVGoban = require('..');
 var config = {
     "size":19,
     "theme":"classic",
+    "coordSystem":"A1",
     "noMargin":false,
     "hideMargin":false
 };
