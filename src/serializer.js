@@ -78,7 +78,7 @@ var _addMarkersLayer = function(str, size, markers, pos) {
 }
 
 var _addLettersLayer = function(str, size, coordSystem) {
-    str += '<g class="letters_layer">'
+    str += '<g class="labels_layer">'
     str +=   _toElem(Geo.shapeLabels(size, coordSystem));
     str += '</g>'
     return str;

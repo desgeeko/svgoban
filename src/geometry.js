@@ -9,6 +9,68 @@ var SV_MARGIN = 30;
 var SV_BORDER_SHRINK = 7;
 var SV_MARKER = 2.5;
 
+/** ASCII decimal codes */
+var CODE_9 = 59;
+var CODE_A = 65;
+var CODE_a = 97;
+
+
+/**
+ * Defines horizontal label.
+ *
+ * @param {number} i index of column
+ * @param {string} coordSystem ("A1" or "aa")
+ * @returns {string}
+ */
+var horizontal = function(i, coordSystem) {
+    if ("aa" === coordSystem) {
+	return String.fromCharCode(CODE_a + --i);
+    }
+    else { // "A1" (default)
+	var skipI = i >= 9 ? 1 : 0;
+	return String.fromCharCode(CODE_A + --i + skipI);
+    }
+}
+
+/**
+ * Defines vertical label.
+ *
+ * @param {number} j index of row
+ * @param {string} coordSystem ("A1" or "aa")
+ * @param {number} size the grid base (9, 13, 19)
+ * @returns {string}
+ */
+var vertical = function(j, coordSystem, size) {
+    if ("aa" === coordSystem) {
+	return String.fromCharCode(CODE_a + --j);
+    }
+    else { // "A1" (default)
+	return (size - --j).toString();
+    }
+}
+
+/**
+ * Calculates column and row of intersection.
+ *
+ * @param {string} intersection either in "A1" or "aa" coordinates
+ * @param {number} size the grid base (9, 13, 19)
+ * @returns {Object}
+ */
+var toColRow = function(intersection, size) {
+    var i, j;
+    if (intersection.charCodeAt(1) > CODE_9) { // "aa"
+	i = intersection.charCodeAt(0) - CODE_a + 1;
+	j = intersection.charCodeAt(1) - CODE_a + 1;
+    }
+    else { // "A1"
+	i = intersection.charCodeAt(0) - CODE_A + 1;
+	var skipI = i >= 9 ? 1 : 0;
+	i -= skipI;
+	j = size - (+intersection.substring(1)) + 1;
+    }
+    return {i: i, j: j};
+}
+
 /**
  * Shapes the background.
  *
@@ -56,7 +118,6 @@ exports.shapeGrid = function(size) {
 	x2 = SV_MARGIN + SV_GRID_SIZE - step;
 	y2 = SV_MARGIN + i * step;
 	d += "M" + x1 + " " + y1 + "H " + x2 + " ";
-//	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
     }
     for (var j = 1; j <= size; j++) {
 	x1 = SV_MARGIN + j * step;
@@ -64,7 +125,6 @@ exports.shapeGrid = function(size) {
 	x2 = SV_MARGIN + j * step;
 	y2 = SV_MARGIN + SV_GRID_SIZE - step;
 	d += "M" + x1 + " " + y1 + "V " + y2 + " ";
-//	ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, style:s});
     } 
     /** Replace multiple lines with one SVG path */
     ret.push({type:"path", d:d, style:s});
@@ -126,28 +186,6 @@ exports.shapeStarPoints = function(size) {
     return ret;
 }
 
-var horizontal = function(i, coordSystem) {
-    if ("aa" === coordSystem) {
-	var CODE_a = 97;
-	return String.fromCharCode(CODE_a + --i);
-    }
-    else { // "A1" (default)
-	var CODE_A = 65;
-	var skipI = i >= 9 ? 1 : 0;
-	return String.fromCharCode(CODE_A + --i + skipI);
-    }
-}
-
-var vertical = function(j, coordSystem, size) {
-    if ("aa" === coordSystem) {
-	var CODE_a = 97;
-	return String.fromCharCode(CODE_a + --j);
-    }
-    else { // "A1" (default)
-	return (size - --j).toString();
-    }
-}
-
 /**
  * Shapes the axis labels.
  *
@@ -185,7 +223,6 @@ exports.shapeLabels = function(size, coordSystem) {
 
 	/** Left column */
 	x = SV_MARGIN;
-//	y = SV_MARGIN - j * step + SV_GRID_SIZE;
 	y = SV_MARGIN + j * step;
 	txt = vertical(j, coordSystem, size);
 	var s = {
@@ -196,7 +233,6 @@ exports.shapeLabels = function(size, coordSystem) {
 
 	/** Right column */
 	x = SV_MARGIN + SV_GRID_SIZE;
-//	y = SV_MARGIN - j * step + SV_GRID_SIZE;
 	y = SV_MARGIN + j * step;
 	txt = vertical(j, coordSystem, size);
 	var s = {
@@ -220,21 +256,21 @@ exports.shapeStones = function(size, positions) {
     var step = SV_GRID_SIZE / (size + 1);
     var cx, cy, r, cls;
     var ret = [];
-    var hletter, vnumber, coord, skipI;
+    var hletter, vnumber, coord;
 
     for ( var i = 1; i <= size; i++ ) {
-	skipI = i >= 9 ? 1 : 0;
-	hletter = String.fromCharCode(64 + i + skipI);
+	hletter = horizontal(i, "A1");
+	cx = SV_MARGIN + i * step;
+
 	for ( var j = 1; j <= size; j++ ) {
-	    vnumber = j.toString();
+	    vnumber = vertical(j, "A1", size);
 	    coord = hletter + vnumber; 
 
 	    cls = "stone";
 	    cls += positions[coord] ? " " + positions[coord] + "stone": " placeholder";
 	    cls += " " + coord;
 
-	    cx = SV_MARGIN + i * step;
-	    cy = SV_MARGIN - j * step + SV_GRID_SIZE;
+	    cy = SV_MARGIN + j * step;
 	    r = step / 2.1;
 	    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
 	}
@@ -255,21 +291,15 @@ exports.shapeStone = function(size, intersection, color) {
     var step = SV_GRID_SIZE / (size + 1);
     var cx, cy, r, cls;
     var ret = [];
-    var i, j, skipI, coord;
-
-    coord = intersection;
-    i = intersection.charCodeAt(0) - 64;
-    skipI = i >= 9 ? 1 : 0;
-    i -= skipI;
-    j = +intersection.substring(1);
+    var rowcol = toColRow(intersection, size);
     cls = "stone";
     color = (color == "placeholder") ? color : color + cls;
     cls += " " + color;
-    cls += " " + coord;
-    cx = SV_MARGIN + i * step;
-    cy = SV_MARGIN - j * step + SV_GRID_SIZE;
+    cls += " " + intersection;
+    cx = SV_MARGIN + rowcol.i * step;
+    cy = SV_MARGIN + rowcol.j * step;
     r = step / 2.1;
-    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
+    ret.push({type:"circle", key:intersection, cx:cx, cy:cy, r:r, class:cls });
     return ret;
 }
 
@@ -286,15 +316,13 @@ exports.shapeMarkers = function(size, markers, positions) {
     var step = SV_GRID_SIZE / (size + 1);
     var x, y, x1, y1, x2, y2, cls, points;
     var ret = [];
-    var i, j, skipI, coord;
+    var coord;
 
     for (var k in markers) {
-	i = k.charCodeAt(0) - 64;
-	skipI = i >= 9 ? 1 : 0;
-	i -= skipI;
-	j = +k.substring(1);
-	x = SV_MARGIN + i * step;
-	y = SV_MARGIN - j * step + SV_GRID_SIZE;
+
+	var rowcol = toColRow(k, size);
+	x = SV_MARGIN + rowcol.i * step;
+	y = SV_MARGIN + rowcol.j * step;
 
 	if ("cross" == markers[k]) {
 	    cls = markers[k] + " on" + (positions[k] || "white");
