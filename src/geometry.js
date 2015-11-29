@@ -72,6 +72,31 @@ var toColRow = function(intersection, size) {
 }
 
 /**
+ * Translates intersection in other coordinate system.
+ *
+ * @param {string} intersection either in "A1" or "aa" coordinates
+ * @param {number} size the grid base (9, 13, 19)
+ * @returns {string}
+ */
+var other = function(intersection, size) {
+    var i, j, ret;
+    if (intersection.charCodeAt(1) > CODE_9) { // "aa"
+	i = intersection.charCodeAt(0) - CODE_a + 1;
+	j = intersection.charCodeAt(1) - CODE_a + 1;
+	ret = horizontal(i, "A1") + vertical(j, "A1", size);
+    }
+    else { // "A1"
+	i = intersection.charCodeAt(0) - CODE_A + 1;
+	var skipI = i >= 9 ? 1 : 0;
+	i -= skipI;
+	j = size - (+intersection.substring(1)) + 1;
+	ret = horizontal(i, "aa") + vertical(j, "aa", size);
+    }
+    return ret;
+}
+
+
+/**
  * Shapes the background.
  *
  * @param {boolean} noMargin
@@ -256,23 +281,26 @@ exports.shapeStones = function(size, positions) {
     var step = SV_GRID_SIZE / (size + 1);
     var cx, cy, r, cls;
     var ret = [];
-    var hletter, vnumber, coord;
+    var hA1, haa, vA1, vaa, target, coordA1;
 
     for ( var i = 1; i <= size; i++ ) {
-	hletter = horizontal(i, "A1");
+	hA1 = horizontal(i, "A1");
+	haa = horizontal(i, "aa");
 	cx = SV_MARGIN + i * step;
 
 	for ( var j = 1; j <= size; j++ ) {
-	    vnumber = vertical(j, "A1", size);
-	    coord = hletter + vnumber; 
+	    vA1 = vertical(j, "A1", size);
+	    vaa = vertical(j, "aa", size);
+	    coordA1 = hA1 + vA1;
+	    target = positions[hA1 + vA1] || positions[haa + vaa];
 
 	    cls = "stone";
-	    cls += positions[coord] ? " " + positions[coord] + "stone": " placeholder";
-	    cls += " " + coord;
+	    cls += target ? " " + target + "stone" : " placeholder";
+	    cls += " " + coordA1;
 
 	    cy = SV_MARGIN + j * step;
 	    r = step / 2.1;
-	    ret.push({type:"circle", key:coord, cx:cx, cy:cy, r:r, class:cls });
+	    ret.push({type:"circle", key:coordA1, cx:cx, cy:cy, r:r, class:cls });
 	}
     }
     return ret;
@@ -339,7 +367,7 @@ exports.shapeMarkers = function(size, markers, positions) {
 	    ret.push({type:"line", x1:x1, y1:y1, x2:x2, y2:y2, class:cls, transform:rot});
 
 	} else if ("circle" == markers[k]) {
-	    cls = markers[k] + " on" + (positions[k] || "white");
+	    cls = markers[k] + " on" + (positions[k] || positions[other(k, size)] || "white");
 	    r = step / 3.5;
 	    ret.push({type:"circle", cx:x, cy:y, r:r, class:cls });
 
