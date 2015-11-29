@@ -1,6 +1,6 @@
 {
   "name": "svgoban",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes",
   "main": "index.js",
   "scripts": {
