@@ -119,7 +119,7 @@ var serializeSVG = function(config, pos, markers) {
     var coordSystem = config.coordSystem || "A1";
     var noMargin = (typeof(config.noMargin) == "undefined") ? false : config.noMargin;
     var hideMargin = (typeof(config.hideMargin) == "undefined") ? false : config.hideMargin;
-    var viewBox = Geo.shapeArea(hideMargin).join(" ");
+    var viewBox = Geo.shapeArea(hideMargin, config.zoom, size).join(" ");
     var str = '<svg class="svgoban" xmlns="http://www.w3.org/2000/svg" version="1.1" ';
     str += 'height="100%" viewBox="' + viewBox + '" >';    
     str += '<defs>';

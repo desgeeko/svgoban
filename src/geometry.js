@@ -411,15 +411,56 @@ exports.shapeMarkers = function(size, markers, positions) {
  * @param {boolean} hideMargin
  * @returns {Array} viewBox (visible area)
  */
-exports.shapeArea = function(hideMargin) {
-    var offset, sz;
+exports.shapeArea = function(hideMargin, zoom, size) {
+    var offsetX, offsetY, lX, lY;
     if (hideMargin) {
-	offset = SV_MARGIN + SV_BORDER_SHRINK;
-	sz = SV_GRID_SIZE - 2*SV_BORDER_SHRINK;
+	offsetX = offsetY = SV_MARGIN + SV_BORDER_SHRINK;
+	lX = lY = SV_GRID_SIZE - 2*SV_BORDER_SHRINK;
     } else {
-	offset = 0;
-	sz = SV_GRID_SIZE + 2*SV_MARGIN;
+	offsetX = offsetY = 0;
+	lX = lY = SV_GRID_SIZE + 2*SV_MARGIN;
     }
-    return [offset, offset, sz, sz];
+    if (zoom) {
+	size = +size;
+	var step = SV_GRID_SIZE / (size + 1);
+	var border = step / 2;
+	if ("point" == zoom.mode) {
+	    var coord = toColRow(zoom.center, size);
+	    offsetX += (coord.i - (size + 1) / 2) * step;
+	    offsetY += (coord.j - (size + 1) / 2) * step;
+	    offsetX += (1 / 2 - 1 / (2 * zoom.ratio)) * lX;
+	    offsetY += (1 / 2 - 1 / (2 * zoom.ratio)) * lY;
+	    lX /= zoom.ratio;
+	    lY /= zoom.ratio;
+	} else if ("zone" == zoom.mode) {
+	    switch (zoom.region) {
+	    case "NW":
+		offsetX += 0;
+		offsetY += 0;
+		lX = lX / 2 + border;
+		lY = lY / 2 + border;
+		break;
+	    case "NE":
+		offsetX += lX / 2 - border;
+		offsetY += 0;
+		lX = lX / 2 + border;
+		lY = lY / 2 + border;
+		break;
+	    case "SE":
+		offsetX += lX / 2 - border;
+		offsetY += lY / 2 - border;
+		lX = lX / 2 + border;
+		lY = lY / 2 + border;
+		break;
+	    case "SW":
+		offsetX += 0;
+		offsetY += lY / 2 - border;
+		lX = lX / 2 + border;
+		lY = lY / 2 + border;
+		break;
+	    }
+	}
+    }
+    return [offsetX, offsetY, lX, lY];
 }
 

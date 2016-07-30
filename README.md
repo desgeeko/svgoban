@@ -1,7 +1,7 @@
 SVGoban
 =======
 
-*A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes.*
+*A lightweight JavaScript library that generates a Goban representation as layered sets of SVG shapes*
 
 ## Project Guidelines
 
@@ -31,6 +31,9 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `config` = an object containing `size` and `theme` attributes
 * `noMargin` and `hideMargin` = booleans
 * `coordSystem` = `"A1"` or `"aa"`
+* `zoom` = an object describing either:
+  * [`mode` = `"zone"`] a region (`"NW"`/`"NE"`/`"SE"`/`"SW"`)
+  * [`mode` = `"point"`] or a center point and a zoom ratio
 
 ### Geometry
 * `shapeBackground(noMargin)` returns 1 pseudo-square whose area may include the margin
@@ -40,7 +43,7 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 * `shapeStones(size, positions)` returns an array of size*size pseudo-circles (stones and placeholders)
 * `shapeStone(size, intersection, color)` returns 1 pseudo-circle
 * `shapeMarkers(size, markers, positions)` returns an array of pseudo-elements drawing triangles, squares,...
-* `shapeArea(hideMargin)` returns a view box that may include the margin
+* `shapeArea(hideMargin, zoom, size)` returns a view box with optional margin and zoom in
 
 ### Styles
 * `defineRadialColors(color)` returns gradient colors
@@ -51,8 +54,5 @@ SVGoban may be installed as a NPM package: `npm install svgoban --save`
 
 ## Roadmap
 
-This is a Work In Progress.
-* Optimize various things
-* Zoom
-* Add new types of markers
+This is a Work In Progress reaching version 1.0.0 soon.
 
