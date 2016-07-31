@@ -409,6 +409,8 @@ exports.shapeMarkers = function(size, markers, positions) {
  * Shapes the visible area.
  *
  * @param {boolean} hideMargin
+ * @param {Object} zoom
+ * @param {number} size the grid base (9, 13, 19)
  * @returns {Array} viewBox (visible area)
  */
 exports.shapeArea = function(hideMargin, zoom, size) {
