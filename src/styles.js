@@ -138,7 +138,7 @@ exports.Themes = {
 	    }
 	    .white .placeholder:hover { 
 		fill: white;
-		stroke: white;
+		stroke: black;
 		opacity: 0.2 
 	    }
 	    .blackstone { 
